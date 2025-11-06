@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zero Trust Vault - Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <div class="sidebar-logo">
+            🔐 <span>Zero Trust Vault</span>
+        </div>
+        <div class="sidebar-menu">
+            <div class="menu-item active" data-section="overview">
+                📊 Overview
+            </div>
+            <div class="menu-item" data-section="files">
+                📁 My Files
+            </div>
+            <div class="menu-item" data-section="security">
+                🛡️ Security Logs
+            </div>
+        </div>
+        <div class="sidebar-footer">
+            <button class="btn-logout">Logout</button>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <!-- HEADER -->
+        <div class="header">
+            <h2>Zero Trust Vault Dashboard</h2>
+            <div class="user-info">
+                <div class="user-avatar" id="userAvatar">A</div>
+                <div class="user-details">
+                    <h3 id="userName">Admin User</h3>
+                    <p id="userRole">Administrator</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- OVERVIEW SECTION -->
+        <div id="overview-section" class="section-container">
+            <div class="status-grid">
+                <div class="status-card status-safe">
+                    <div class="status-card-header">
+                        <h3>Security Status</h3>
+                        <span class="status-icon">🔒</span>
+                    </div>
+                    <div class="status-card-value" id="securityStatus">VERIFIED</div>
+                    <div class="status-card-info">IP address validated</div>
+                </div>
+
+                <div class="status-card">
+                    <div class="status-card-header">
+                        <h3>Current IP</h3>
+                        <span class="status-icon">🌐</span>
+                    </div>
+                    <div class="status-card-value" id="currentIP">Detecting...</div>
+                    <div class="status-card-info">Your active IP address</div>
+                </div>
+
+                <div class="status-card">
+                    <div class="status-card-header">
+                        <h3>Trusted IP</h3>
+                        <span class="status-icon">✓</span>
+                    </div>
+                    <div class="status-card-value" id="trustedIP">103.25.10.5</div>
+                    <div class="status-card-info">IP on login</div>
+                </div>
+
+                <div class="status-card">
+                    <div class="status-card-header">
+                        <h3>Access Level</h3>
+                        <span class="status-icon">🔑</span>
+                    </div>
+                    <div class="status-card-value" id="accessLevelText">ADMIN</div>
+                    <div class="status-card-info">Your role permissions</div>
+                </div>
+            </div>
+
+            <!-- IP MONITORING INFO -->
+            <div class="files-section">
+                <div class="files-header">
+                    <h3>IP Monitoring Status</h3>
+                </div>
+                <div class="status-grid">
+                    <div class="status-card">
+                        <div class="status-card-header">
+                            <h3>IP Match Status</h3>
+                            <span class="status-icon" id="matchIcon">✓</span>
+                        </div>
+                        <div class="status-card-value" id="ipMatchStatus" style="color: var(--success-color);">MATCHED</div>
+                        <div class="status-card-info">Last checked: <span id="lastCheckTime">now</span></div>
+                    </div>
+
+                    <div class="status-card">
+                        <div class="status-card-header">
+                            <h3>Session Duration</h3>
+                            <span class="status-icon">⏱️</span>
+                        </div>
+                        <div class="status-card-value" id="sessionDuration">00:00:00</div>
+                        <div class="status-card-info">Time logged in</div>
+                    </div>
+
+                    <div class="status-card">
+                        <div class="status-card-header">
+                            <h3>Check Interval</h3>
+                            <span class="status-icon">🔄</span>
+                        </div>
+                        <div class="status-card-value">Every 5s</div>
+                        <div class="status-card-info">Real-time IP monitoring</div>
+                    </div>
+
+                    <div class="status-card">
+                        <div class="status-card-header">
+                            <h3>VPN Status</h3>
+                            <span class="status-icon" id="vpnStatusIcon">✓</span>
+                        </div>
+                        <div class="status-card-value" id="vpnStatus" style="color: var(--success-color);">NOT DETECTED</div>
+                        <div class="status-card-info">Safe to access</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FILES SECTION -->
+        <div id="files-section" class="section-container" style="display: none;">
+            <div class="files-header">
+                <h3>Secure File Downloads</h3>
+                <div class="filter-tabs">
+                    <button class="filter-btn active" data-filter="all">All Files</button>
+                    <button class="filter-btn" data-filter="public">Public</button>
+                    <button class="filter-btn" data-filter="restricted">Restricted</button>
+                </div>
+            </div>
+
+            <div id="accessWarning" class="alert" style="display: none;">
+                ⚠️ Your IP has changed. Suspicious IP detected. Access restricted to certain files.
+            </div>
+
+            <div class="files-grid" id="filesGrid">
+                <!-- Files will be loaded here -->
+            </div>
+        </div>
+
+        <!-- SECURITY LOGS SECTION -->
+        <div id="security-section" class="section-container" style="display: none;">
+            <div class="files-header">
+                <h3>Security Activity Logs</h3>
+            </div>
+            <div id="logsContainer" class="files-grid">
+                <!-- Logs will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- FILE PREVIEW MODAL -->
+    <div id="fileModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <div class="modal-header">
+                <h2 id="modalFileName">File Name</h2>
+            </div>
+            <div class="modal-body" id="modalFileContent">
+                <!-- File content will be displayed here -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn-close-modal">Close</button>
+                <button class="btn-download-modal" id="modalDownloadBtn">Download File</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CUSTOM POPUP OVERLAY FOR DASHBOARD ALERTS -->
+    <div id="customPopup" class="custom-popup">
+        <div class="popup-content">
+            <div class="popup-icon" id="popupIcon">✓</div>
+            <h3 id="popupTitle">Success</h3>
+            <p id="popupMessage">Operation completed successfully</p>
+            <button class="popup-btn" id="popupBtn">OK</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

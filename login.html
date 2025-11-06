@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zero Trust Vault - Secure Access</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <div class="logo-section">
+                <div class="shield-icon">🔐</div>
+                <h1>Zero Trust Vault</h1>
+                <p class="tagline">Enterprise Security & Access Control</p>
+            </div>
+
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter username" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter password" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="role">Select Role</label>
+                    <select id="role" name="role" required>
+                        <option value="">-- Choose Your Role --</option>
+                        <option value="admin">Admin - Full Access</option>
+                        <option value="manager">Manager - Limited Access</option>
+                        <option value="employee">Employee - Restricted Access</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn-login">Login & Verify</button>
+            </form>
+
+            <div class="demo-credentials">
+                <p><strong>Demo Credentials:</strong></p>
+                <small>Username: admin | Password: admin123</small><br>
+                <small>Username: manager | Password: manager123</small><br>
+                <small>Username: employee | Password: emp123</small>
+                <p style="margin-top: 15px;">Don't have an account?</p>
+                <a href="signup.html" class="link-text">Sign up here</a>
+            </div>
+        </div>
+
+        <div class="background-animation"></div>
+    </div>
+
+    <div id="customPopup" class="custom-popup">
+        <div class="popup-content">
+            <div class="popup-icon" id="popupIcon">✓</div>
+            <h3 id="popupTitle">Success</h3>
+            <p id="popupMessage">Operation completed successfully</p>
+            <button class="popup-btn" id="popupBtn">OK</button>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+</body>
+</html>
